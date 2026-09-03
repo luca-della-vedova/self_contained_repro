@@ -1,6 +1,5 @@
 # Bazel symlinks
 bazel-*
 
-# rules_rs worktree and fallback cloned repo
-.rules_rs_worktree/
-.rules_rs_repo/
+# Cloned rules_rs repository
+.rules_rs/
