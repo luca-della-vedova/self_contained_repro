@@ -1,0 +1,7 @@
+# Disable local machine C++ toolchain auto-detection
+common --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+common --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+
+# Hermetic action environment (matching insrc .bazelrc)
+common --incompatible_strict_action_env
+
