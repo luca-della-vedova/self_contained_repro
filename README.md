@@ -1,3 +1,5 @@
+:warn: AI generated :warn:
+
 # Rust >= 1.90 Self-Contained Linker Reproduction
 
 This repository provides a minimal reproducible example for the build failure encountered in CI when using `rules_rs` with Rust >= 1.90 on Linux `x86_64`.
