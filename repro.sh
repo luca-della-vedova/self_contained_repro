@@ -13,7 +13,7 @@ if [[ ! -d "${RULES_RS_DIR}" ]]; then
 fi
 
 if [[ "${1:-}" == "--fix" ]]; then
-  TARGET_REV="${FIX_REV:-6120dfc}"
+  TARGET_REV="${FIX_REV:-2d856b2}"
   echo "=== Testing rules_rs WITH fix (${TARGET_REV}) ==="
 else
   TARGET_REV="${BROKEN_REV:-1600851}"

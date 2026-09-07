@@ -75,12 +75,17 @@ Run:
 ```bash
 ./repro.sh --fix
 ```
-This points the `rules_rs` worktree to the commit containing the fix (`6120dfc`), which declares the linker in `declare_rustc_toolchains.bzl`:
+This points the `rules_rs` worktree to the commit containing the fix (`2d856b2`), which passes `-Clinker-features=-lld` on `x86_64-unknown-linux-gnu` for Rust >= 1.90:
 ```python
-linker = select({
-    "@platforms//os:linux": lld_label,
-    "//conditions:default": None,
-})
+def _default_rustc_flags(version):
+    if _channel(version) == "stable" and not versions.is_at_least("1.90.0", version):
+        return []
+
+    return select({
+        "@rules_rs//rs/platforms/config:x86_64-unknown-linux-gnu": ["-Clinker-features=-lld"],
+        "//conditions:default": [],
+    })
 ```
-Declaring the linker ensures that `gcc-ld` (inside `:rust-lld`) is included as an action input in the sandbox / RBE container, allowing the build to succeed cleanly without any extra compiler flags.
+Disabling `rustc`'s internal LLD feature prevents `rustc` from looking for `gcc-ld` in the sysroot, resolving the hermetic missing-input failure while preventing `rustc` from hijacking the C++ toolchain's configured linker.
+
 
